@@ -1,5 +1,5 @@
 import './App.css';
-import Component from './components11/done/MainRouter'
+import Component from './components02/practice/ProductPage';
 
 const App = ()=> {
     return (
