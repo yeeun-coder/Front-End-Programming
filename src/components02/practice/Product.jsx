@@ -7,9 +7,9 @@ const Product = ({p}) => {
             <tr>
                 <td>{id}</td>
                 <td>{name}</td>
-                <td>{price}</td>
+                <td>{parseInt(price).toLocaleString()}</td>
             </tr>
-            <tr style={{backgroundColor: 'gray', color: 'white'}}>
+            <tr style={{backgroundColor: 'cyan', color: 'white'}}>
                 <td colSpan="3">{p.description}</td>
             </tr>
         </>

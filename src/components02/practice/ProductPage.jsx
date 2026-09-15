@@ -14,7 +14,7 @@ const products = [
 const ProductPage = () => {
     return ( 
         <div className='box'>
-            <h1>상품목록</h1>
+            <h1 style={{textAlign: 'center'}}>상품목록</h1>
             <table>
                 <tbody>
                     {products.map(prod=>

@@ -9,7 +9,7 @@ const students = [
     { id: 4, name: '양예은', dept: '컴정과' },
 ]
 
-const StudentPage = () => {
+const StudentPage = () => {  // function StudentPage() { 도 가능
     return ( 
         <div className='box'>
             <h1>학생목록</h1>

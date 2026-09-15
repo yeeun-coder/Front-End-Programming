@@ -4,18 +4,24 @@ import React, { useState } from 'react'
 import '../Style02.css'
 
 const SayPage = () => {
-    const initMessage = 'Please press the button!'
+    const initMessage = 'Please press the button...'
+    const [message, setMessage] = useState(initMessage)
+    const [textColor, setTextColor] = useState('red')
+
     return (
         <div className='box'>
-            <h1>{initMessage}</h1>
+            <h1 style={{ color: textColor }}>{message}</h1>
             <div>
-                <button>입장</button>
-                <button>퇴장</button>
+                <button onClick={()=>setMessage('Hello!')}>입장</button>
+                <button onClick={()=>setMessage('Goodbye!')}>퇴장</button>
             </div>
             <div>
-                <button>빨강색</button>
-                <button>초록색</button>
-                <button>파랑색</button>
+                <button style={{ backgroundColor: 'red', color: 'white' }}
+                    onClick={()=>setTextColor('red')}>빨강색</button>
+                <button style={{ backgroundColor: 'green', color: 'white' }} 
+                    onClick={()=>setTextColor('green')}>초록색</button>
+                <button style={{ backgroundColor: 'blue', color: 'white' }} 
+                    onClick={()=>setTextColor('blue')}>파랑색</button>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 //Fragment(프래그먼트)연습 .box>h3 글자색상변경
 //------------------------------------------
-const Student = ({student}) => {
-    const {id, name, dept} = student; //비구조할당
+const Student = ({stu}) => {
+    const {id, name, dept} = stu; //비구조할당
     return (
         <div>
             <h3>학번: {id}</h3>
