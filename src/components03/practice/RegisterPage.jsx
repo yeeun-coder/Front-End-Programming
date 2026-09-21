@@ -18,7 +18,8 @@ const RegisterPage = () => {
     const [products, setProducts] = useState(data);
     const [form, setForm] = useState(initForm);
     const {name, price} = form;
-    // const idRef = useRef();
+    const idRef = useRef(4);
+    const nameRef = useRef('');
 
     // form 내용이 바뀔때 함수
     const onChangeForm = (e) => {
@@ -29,20 +30,40 @@ const RegisterPage = () => {
     }
 
     // 등록 버튼을 클릭 함수
-    const onClickRegister = (e) => {
+    const onRegister = (e) => {
         e.preventDefault();  // submit 이벤트 발생시 페이지가 새로고침 되는 것을 방지
-        setProducts([...products, form]);
+        if(name === '' || price === ''){
+            alert('상품명이나 상품가격을 꼭 입력하세요!');
+        } else {
+            setProducts(products.concat({...form, id:idRef.current++}));
+            setForm({name:'', price:''});
+            nameRef.current.focus()
+        }
+    }
+
+    const onReset = (e) => {
+        e.preventDefault();
+        if(form !== initForm) {
+            if(window.confirm('정말로 취소하실래요?')) {
+                setForm(initForm);
+            }
+        }
+    }
+
+    const onDelete = (id) => {
+        if(window.confirm(`${id}번 상품을 삭제하실래요?`)) {
+            setProducts(products.filter(p=>p.id !== id));
+        }
     }
 
     return (
         <div className='box'>
             <h1>상품등록</h1>
-            <form onSubmit={onClickRegister}>
-                <input onChange={onChangeForm}
-                    value={name}
+            <form onSubmit={onRegister} onReset={onReset}>
+                <input ref={nameRef}
+                    value={name} onChange={onChangeForm}
                     placeholder='상품이름' name='name'/>
-                <input onChange={onChangeForm}
-                value={price}
+                <input value={price} onChange={onChangeForm}
                     placeholder='상품가격' name='price' type='number' step={1000}/>
                 <div>
                     <button type='submit'>등록</button>
@@ -51,12 +72,21 @@ const RegisterPage = () => {
             </form>
             <h1 style={{marginTop:'30px'}}>상품목록</h1>
             <table>
+                <thead>
+                    <tr>
+                        <td>NO.</td>
+                        <td>NAME</td>
+                        <td>PRICE</td>
+                        <td>DELETE</td>
+                    </tr>
+                </thead>
                 <tbody>
-                    {products.map(p=>
+                    {products.map((p, index)=>
                         <tr key={p.id}>
-                            <td>{p.id}</td>
-                            <td>{p.name}</td>
+                            <td>{index+1}</td>
+                            <td>{p.id}.{p.name}</td>
                             <td>{p.price}</td>
+                            <td><a onClick={()=>onDelete(p.id)} href='#'>DEL</a></td>
                         </tr>
                     )}
                 </tbody>
