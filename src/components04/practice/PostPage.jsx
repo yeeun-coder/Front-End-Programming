@@ -7,18 +7,46 @@ import PageButton from './PageButton'
 import '../Style04.css'
 
 const PostPage = () => {
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(19);
+    const size = 5;
+    const lastRef = useRef(1);
+
     const callAPI = () => {
         fetch('https://jsonplaceholder.typicode.com/posts')
         .then(response => response.json())
         .then(json => {
             console.log(json);
+            const start = (page-1) * size + 1;
+            const end = (page * size);
+            const data = json.filter(post=>post.id>=start && post.id<=end);
+            setPosts(data);
+            lastRef.current=Math.ceil(json.length/size);
         });
+    }
+
+    useEffect(()=>{
+        callAPI();
+    }, [page]);
+
+    const onClickTitle = (id) => {
+        setPosts(posts.map(post=>post.id===id ? 
+            {...post, isVisible:!post.isVisible} : post));
     }
 
     return (
         <div className='box'>
-            <h1>Posts</h1>
-            <PageButton/>
+            <h1>Posts(양예은)</h1>
+            {posts.map(post=>
+                <div key={post.id}>
+                    <h5 onClick={()=>onClickTitle(post.id)} 
+                        className='title'>{post.id}. {post.title}</h5>
+                    {post.isVisible &&
+                        <div className='body'>{post.body}</div>
+                    }
+                </div>
+            )}
+            <PageButton last={lastRef.current} page={page} setPage={setPage}/>
         </div>
     )
 }
