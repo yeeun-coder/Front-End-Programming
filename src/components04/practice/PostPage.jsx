@@ -18,7 +18,7 @@ const PostPage = () => {
         .then(json => {
             console.log(json);
             const start = (page-1) * size + 1;
-            const end = (page * size);
+            const end = page * size;
             const data = json.filter(post=>post.id>=start && post.id<=end);
             setPosts(data);
             lastRef.current=Math.ceil(json.length/size);

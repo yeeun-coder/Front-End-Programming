@@ -8,6 +8,7 @@ import PageButton from './PageButton';
 
 const TodoPage = () => {
     const [todos, setTodos] = useState([]);
+    const [checked, setChecked] = useState([]);
     const [page, setPage] = useState(1);
     const size = 10;
     const lastRef = useRef(1);
@@ -18,8 +19,9 @@ const TodoPage = () => {
         .then(json => {
             console.log(json);
             const start = (page-1) * size + 1;
-            const end = (page * size);
-            const data = json.filter(todo=>todo.id>=start && todo.id<=end);
+            const end = page * size;
+            // const data = json.filter(todo=>todo.id>=start && todo.id<=end);
+            const data = json.filter(post=>post.id>=start && post.id<=end);
             setTodos(data);
             lastRef.current = Math.ceil(json.length/size);
         });
@@ -28,13 +30,36 @@ const TodoPage = () => {
     useEffect(()=>{
         callAPI();
     }, [page]);
+
+    useEffect(()=>{
+        setChecked(todos.filter(todo=>todo.completed));
+    }, [todos]);
+
+    const onChange = (e, id) => {
+        const data = todos.map(todo=>todo.id===id ? 
+            {...todo, completed:e.target.checked} : todo
+        );
+        setTodos(data);
+    }
+
+    const onChangeAll = (e) => {
+        const data = todos.map(todo=>({...todo, completed:e.target.checked}));
+        setTodos(data);
+    }
     
     return (
         <div className='box'>
-            <h1>Todos(양예은)</h1>
+            <h1>Todos</h1>
+            <div>
+                <input checked={todos.length===checked.length}
+                    type='checkbox' onChange={onChangeAll}/>
+                전체선택/해제
+            </div>
+            <hr/>
             {todos.map(todo=>
                 <div key={todo.id}>
-                    <input type='checkbox' checked={todo.completed}/>
+                    <input onChange={(e)=>onChange(e, todo.id)}
+                        type='checkbox' checked={todo.completed}/>
                     <span className='title'>{todo.id}. {todo.title}</span>
                 </div>
             )}
