@@ -26,25 +26,60 @@ const initState = {
 }
 
 const reducer = (state, action) => {
-
+    switch(action.type) {
+        case ACTION_TYPE.add:
+            return {
+                ...state,
+                cart:{
+                    count:state.cart.count+1,
+                    products:state.cart.products.concat(action.product)
+                }
+            }
+        case ACTION_TYPE.delete:
+            return {
+                ...state,
+                cart:{
+                    count:state.cart.count-1,
+                    products:state.cart.products.filter(p=>p.id!==action.product.id)
+                }
+            }
+    }
 }
 
 const CartPage = () => {
     const [name, setName] = useState('삼성 세탁기');
     const [state, dispatch] = useReducer(reducer, initState);
+    const idRef = useRef(4);
 
     return (
         <div className='box'>
             <div>
-                <h1>카트 목록</h1>
+                <h1>카트 목록(양예은)</h1>
                 <h5>상품수: {state.cart.count}개</h5>
                 <input value={name} 
                     onChange={(e)=>setName(e.target.value)} placeholder='상품이름'/>
-                <button >등록</button>
+                <button onClick={()=>dispatch({
+                    type:ACTION_TYPE.add,
+                    product:{id:idRef.current++, name:`${name}(${idRef.current-1})`}
+                })}>등록</button>
+                <table>
+                    <tbody>
+                        {state.cart.products.map(p=>
+                            <Product dispatch={dispatch} type="cart" key={p.id} product={p}/>
+                        )}
+                    </tbody>
+                </table>
             </div>
             <div>
                 <h1>주문 목록</h1>
                 <h5>상품수: {state.order.count}개</h5>
+                <table>
+                    <tbody>
+                        {state.order.products.map(p=>
+                            <Product type="order" key={p.id} product={p}/>
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
     )
