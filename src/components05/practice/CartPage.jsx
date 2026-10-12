@@ -25,7 +25,7 @@ const initState = {
     }
 }
 
-const reducer = (state, action) => {
+const reducer1 = (state, action) => {
     switch(action.type) {
         case ACTION_TYPE.add:
             return {
@@ -43,18 +43,19 @@ const reducer = (state, action) => {
                     products:state.cart.products.filter(p=>p.id!==action.product.id)
                 }
             }
+        
     }
 }
 
 const CartPage = () => {
     const [name, setName] = useState('삼성 세탁기');
-    const [state, dispatch] = useReducer(reducer, initState);
+    const [state, dispatch] = useReducer(reducer1, initState);
     const idRef = useRef(4);
 
     return (
         <div className='box'>
             <div>
-                <h1>카트 목록(양예은)</h1>
+                <h1>카트 목록</h1>
                 <h5>상품수: {state.cart.count}개</h5>
                 <input value={name} 
                     onChange={(e)=>setName(e.target.value)} placeholder='상품이름'/>
@@ -64,8 +65,8 @@ const CartPage = () => {
                 })}>등록</button>
                 <table>
                     <tbody>
-                        {state.cart.products.map(p=>
-                            <Product dispatch={dispatch} type="cart" key={p.id} product={p}/>
+                        {state.cart.products.map(pro=>
+                            <Product dispatch={dispatch} type="cart" key={pro.id} product={pro}/>
                         )}
                     </tbody>
                 </table>

@@ -1,6 +1,5 @@
 import './App.css';
-import Component from './components05/practice/CartPage';
-// import Component1 from './components04/practice/TodoPage';
+import Component from './components06/practice/color/ColorPage';
 
 const App = ()=> {
     return (
