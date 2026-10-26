@@ -36,7 +36,7 @@ const PostPage = () => {
 
     return (
         <div className='box'>
-            <h1>Posts(양예은)</h1>
+            <h1>Posts</h1>
             {posts.map(post=>
                 <div key={post.id}>
                     <h5 onClick={()=>onClickTitle(post.id)} 

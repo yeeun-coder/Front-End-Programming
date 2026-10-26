@@ -1,11 +1,10 @@
 import './App.css';
-import Component from './components06/practice/color/ColorPage';
+import Component from './components07/practice/JSONRouter';
 
 const App = ()=> {
     return (
         <div>
             <Component/>
-            {/* <Component1/> */}
         </div>
     );
 }
