@@ -7,7 +7,7 @@ const MenuBar = () => {
     return (
         <Navbar expand="lg" bg="primary" data-bs-theme="dark">
             <Container fluid>
-                <Navbar.Brand href="/">REACT</Navbar.Brand>
+                <Navbar.Brand href="/">양예은</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll"/>
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="me-auto my-2 my-lg-0" style={{maxHeight:'500px'}} navbarScroll>
